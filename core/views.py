@@ -84,17 +84,17 @@ def shorten(request):
 
             if link_count:
                 messages.error(request, 'Reached max limit')
-            else:
-                # for anonymous users 
-                url = UrlModel.objects.create(
-                    session_key = request.session.session_key,
-                    original_link  = link
-                    )
-                url.save()
-                attempts = request.session.get('attempts', 0)
+        else:
+            # for anonymous users 
+            url = UrlModel.objects.create(
+                session_key = request.session.session_key,
+                original_link  = link
+                )
+            url.save()
+            attempts = request.session.get('attempts', 0)
 
-                if attempts:
-                    attempts += 1
+            if attempts:
+                attempts += 1
 
                 messages.success(request, 'link shortening done successfully')
             
